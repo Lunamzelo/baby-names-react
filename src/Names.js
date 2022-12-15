@@ -4,10 +4,11 @@ import Favourites from "./Favourites";
 
 const Names = () => {
   const [isSearched, setIsSearched] = useState(false);
-
   const [searchResults, setSearchResults] = useState("");
-  const [favourites, setFavourites] = useState([]);
-  const [clicked, setClicked] = useState(false);
+  const [favourites, setFavourites] = useState("");
+ 
+  
+
 
   const searchHandler = (e) => {
     const matchedNames = BabyNames.filter((el) =>
@@ -17,69 +18,39 @@ const Names = () => {
     setIsSearched(true);
     setSearchResults(matchedNames);
   };
-  const clickHandler = (e) => {
-    console.log("I clicked it");
-    const clickedName = BabyNames.filter((el) => el.name === e.target.value);
-   // favourites.push(clickedName)
-    setFavourites(...clickedName);
-    console.log(favourites);
-  };
+   
+  
 
-  return isSearched ? (
+  const namesToDisplay = isSearched ? searchResults : BabyNames;
+ // const favNames = clicked ? clickedName : "";
+  return (
     <>
       <input
         type="text"
         placeholder="search a name "
         onChange={(e) => searchHandler(e)}
       ></input>
-      <Favourites />
+      <Favourites favourites={favourites} />
+     
+
       <div className="names-container">
-        {searchResults
+        {namesToDisplay
           .sort((a, b) => (a.name > b.name ? 1 : -1))
           .map((data) => {
             if (data.sex === "f") {
               return (
-                <button
-                  className="girls-names"
-                  onClick={(e) => clickHandler(e)}
-                >
+                <button className="girls-names" onClick={setFavourites}>
                   {data.name}
                 </button>
               );
             } else {
               return (
-                <button className="boys-names" onClick={(e) => clickHandler(e)}>
+                <button className="boys-names" onClick={setFavourites}>
                   {data.name}
                 </button>
               );
             }
           })}
-      </div>
-    </>
-  ) : (
-    <>
-      <input
-        type="text"
-        placeholder="search a name "
-        onChange={(e) => searchHandler(e)}
-      ></input>
-
-      <div className="names-container">
-        {BabyNames.sort((a, b) => (a.name > b.name ? 1 : -1)).map((data) => {
-          if (data.sex === "f") {
-            return (
-              <button className="girls-names" onClick={(e) => clickHandler(e)}>
-                {data.name}
-              </button>
-            );
-          } else {
-            return (
-              <button className="boys-names" onClick={(e) => clickHandler(e)}>
-                {data.name}
-              </button>
-            );
-          }
-        })}
       </div>
     </>
   );
