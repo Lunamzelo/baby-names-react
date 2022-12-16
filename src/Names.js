@@ -6,9 +6,6 @@ const Names = () => {
   const [isSearched, setIsSearched] = useState(false);
   const [searchResults, setSearchResults] = useState("");
   const [favourites, setFavourites] = useState("");
- 
-  
-
 
   const searchHandler = (e) => {
     const matchedNames = BabyNames.filter((el) =>
@@ -18,20 +15,17 @@ const Names = () => {
     setIsSearched(true);
     setSearchResults(matchedNames);
   };
-   
-  
 
   const namesToDisplay = isSearched ? searchResults : BabyNames;
- // const favNames = clicked ? clickedName : "";
+  
   return (
     <>
       <input
         type="text"
         placeholder="search a name "
-        onChange={(e) => searchHandler(e)}
+        onChange={ searchHandler}
       ></input>
       <Favourites favourites={favourites} />
-     
 
       <div className="names-container">
         {namesToDisplay
